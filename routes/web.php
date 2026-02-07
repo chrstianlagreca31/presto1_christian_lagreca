@@ -22,6 +22,10 @@ Route::middleware('auth')->group(function () {
         ->name('articles.create');
 });
 
+Route::get('/categories/{category}/articles',
+    [ArticleController::class, 'byCategory']
+)->name('articles.byCategory');
+
 
 Route::get('/articles/{article}', [ArticleController::class, 'show'])
     ->name('articles.show');

@@ -1,6 +1,9 @@
-<x-layout title="Home">
+<x-layout title="Categoria {{ $category->name }}">
     <div class="container">
-        <h1 class="mb-4">Ultimi annunci</h1>
+
+        <h1 class="mb-4">
+            Annunci in categoria: {{ $category->name }}
+        </h1>
 
         <div class="row">
             @forelse($articles as $article)
@@ -8,8 +11,9 @@
                     <x-card :article="$article" />
                 </div>
             @empty
-                <p>Nessun annuncio presente.</p>
+                <p>Nessun annuncio in questa categoria.</p>
             @endforelse
         </div>
+
     </div>
 </x-layout>

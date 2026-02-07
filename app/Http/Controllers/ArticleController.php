@@ -6,6 +6,8 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use App\Models\Category;
+
 
 class ArticleController extends Controller implements HasMiddleware
 {
@@ -16,11 +18,12 @@ class ArticleController extends Controller implements HasMiddleware
         ];
     }
 
-    public function index()
-    {
-        $articles = Article::latest()->get();
-        return view('articles.index', compact('articles'));
-    }
+   public function index()
+{
+    $articles = Article::latest()->paginate(6);
+
+    return view('articles.index', compact('articles'));
+}
 
     public function show(Article $article)
     {
@@ -31,4 +34,10 @@ class ArticleController extends Controller implements HasMiddleware
     {
         return view('articles.create');
     }
+    public function byCategory(Category $category)
+{
+    $articles = $category->articles()->latest()->get();
+
+    return view('articles.byCategory', compact('articles', 'category'));
+}
 }
