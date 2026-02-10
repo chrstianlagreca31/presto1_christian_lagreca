@@ -18,26 +18,38 @@ class ArticleController extends Controller implements HasMiddleware
         ];
     }
 
-   public function index()
+ public function index()
 {
-    $articles = Article::latest()->paginate(6);
+    $articles = Article::accepted()
+        ->orderBy('created_at', 'desc')
+        ->paginate(6);
 
     return view('articles.index', compact('articles'));
 }
 
-    public function show(Article $article)
-    {
-        return view('articles.show', compact('article'));
+   public function show(Article $article)
+{
+    if (!$article->is_accepted) {
+        abort(404);
     }
+
+    return view('articles.show', compact('article'));
+}
+
+
 
     public function create()
     {
         return view('articles.create');
     }
-    public function byCategory(Category $category)
+public function byCategory(Category $category)
 {
-    $articles = $category->articles()->latest()->get();
+    $articles = $category->articles()
+        ->accepted()
+        ->orderBy('created_at', 'desc')
+        ->get();
 
     return view('articles.byCategory', compact('articles', 'category'));
 }
+
 }

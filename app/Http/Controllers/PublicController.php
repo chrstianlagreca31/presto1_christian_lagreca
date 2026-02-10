@@ -5,10 +5,14 @@ use App\Models\Article;
 
 class PublicController extends Controller
 {
-   public function home()
+ public function home()
 {
-    $articles = Article::latest()->take(6)->get();
+    $articles = Article::accepted()
+        ->orderBy('created_at', 'desc')
+        ->take(6)
+        ->get();
 
     return view('welcome', compact('articles'));
 }
+
 }

@@ -47,36 +47,56 @@
                     </ul>
                 </li>
 
-                @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('articles.create') }}">
-                            Inserisci annuncio
-                        </a>
-                    </li>
+               @auth
+    {{-- LINK REVISORE --}}
+    @if(auth()->user()->is_revisor)
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('revisor.index') }}">
+                Area Revisore
+                <span class="badge bg-warning text-dark">
+                    {{ \App\Models\Article::toBeRevisedCount() }}
+                </span>
+            </a>
+        </li>
+    @endif
 
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button class="btn btn-link nav-link">
-                                Logout
-                            </button>
-                        </form>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">
-                            Login
-                        </a>
-                    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('articles.create') }}">
+            Inserisci annuncio
+        </a>
+    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">
-                            Registrati
-                        </a>
-                    </li>
-                @endauth
+    <li class="nav-item">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button class="btn btn-link nav-link">
+                Logout
+            </button>
+        </form>
+    </li>
+
+    <li class="nav-item">
+    <a class="nav-link" href="{{ route('work.with.us') }}">
+        Lavora con noi
+    </a>
+</li>
+@else
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('login') }}">
+            Login
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('register') }}">
+            Registrati
+        </a>
+    </li>
+@endauth
+
 
             </ul>
         </div>
     </div>
 </nav>
+
