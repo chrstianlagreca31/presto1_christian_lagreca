@@ -57,6 +57,11 @@ Route::middleware('auth')->group(function () {
         ->name('become.revisor');
 });
 
+Route::get('/search', [ArticleController::class, 'search'])
+    ->name('articles.search');
+
+
 
 Route::get('/make-revisor/{email}', [RevisorController::class, 'makeRevisor'])
     ->name('make.revisor');
+

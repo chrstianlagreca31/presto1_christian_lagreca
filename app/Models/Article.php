@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
+    use Searchable;
+
     protected $fillable = [
         'title',
         'description',
@@ -15,6 +18,7 @@ class Article extends Model
         'is_accepted',
     ];
 
+    
 
     public function category()
     {
@@ -26,7 +30,7 @@ class Article extends Model
         return $this->belongsTo(User::class);
     }
 
- 
+   
 
     public function setAccepted(?bool $value): void
     {
@@ -34,16 +38,25 @@ class Article extends Model
         $this->save();
     }
 
-
+    public static function toBeRevisedCount(): int
+    {
+        return self::whereNull('is_accepted')->count();
+    }
 
     public function scopeAccepted($query)
     {
         return $query->where('is_accepted', true);
     }
 
+    
 
-    public static function toBeRevisedCount(): int
+    public function toSearchableArray()
     {
-        return self::whereNull('is_accepted')->count();
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'category' => $this->category->name,
+        ];
     }
 }

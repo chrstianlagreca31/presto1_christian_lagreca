@@ -9,6 +9,8 @@ use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Category;
 
 
+
+
 class ArticleController extends Controller implements HasMiddleware
 {
     public static function middleware()
@@ -52,4 +54,15 @@ public function byCategory(Category $category)
     return view('articles.byCategory', compact('articles', 'category'));
 }
 
-}
+
+public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    $articles = Article::search($query)
+        ->where('is_accepted', true)
+        ->paginate(6);
+
+    return view('articles.searched', compact('articles', 'query'));
+}}
+
