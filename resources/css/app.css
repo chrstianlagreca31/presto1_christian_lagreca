@@ -1,1 +1,14 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+.article-img {
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.article-show-img {
+    height: 400px;
+    object-fit: cover;
+    width: 100%;
+}
+

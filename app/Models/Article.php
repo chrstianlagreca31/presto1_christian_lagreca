@@ -48,7 +48,10 @@ class Article extends Model
         return $query->where('is_accepted', true);
     }
 
-    
+    public function images()
+{
+    return $this->hasMany(Image::class);
+}
 
     public function toSearchableArray()
     {

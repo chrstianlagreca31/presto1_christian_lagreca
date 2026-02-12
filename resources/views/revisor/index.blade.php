@@ -6,12 +6,20 @@
             <h2>{{ $article_to_check->title }}</h2>
 
             <div class="row my-3">
-                @for($i = 0; $i < 6; $i++)
-                    <div class="col-md-4 mb-2">
-                        <img src="https://via.placeholder.com/300x200" class="img-fluid">
-                    </div>
-                @endfor
+
+    @if($article_to_check->images->count() > 0)
+
+        @foreach($article_to_check->images as $image)
+            <div class="col-md-4 mb-3">
+                <img src="{{ Storage::url($image->path) }}"
+                     class="img-fluid article-img rounded shadow">
             </div>
+        @endforeach
+
+    @endif
+
+</div>
+
 
             <p>{{ $article_to_check->description }}</p>
 

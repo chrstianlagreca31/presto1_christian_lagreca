@@ -12,14 +12,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
 
-                
+               
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('articles.index') }}">
                         {{ __('ui.announcements') }}
                     </a>
                 </li>
 
-                
+               
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
                        href="#"
@@ -33,7 +33,7 @@
                             <li>
                                 <a class="dropdown-item"
                                    href="{{ route('articles.byCategory', $category) }}">
-                                    {{ __("ui.$category->name") }}
+                                    {{ __('ui.' . $category->name) }}
                                 </a>
                             </li>
                         @endforeach
@@ -42,6 +42,7 @@
 
                 @auth
 
+                 
                     @if(auth()->user()->is_revisor)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('revisor.index') }}">
@@ -53,12 +54,23 @@
                         </li>
                     @endif
 
+                   
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('articles.create') }}">
                             {{ __('ui.insert_announcement') }}
                         </a>
                     </li>
 
+                   
+                    @if(!auth()->user()->is_revisor)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('work.with.us') }}">
+                                {{ __('ui.work_with_us') }}
+                            </a>
+                        </li>
+                    @endif
+
+                    {{-- LOGOUT --}}
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
@@ -68,20 +80,16 @@
                         </form>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('work.with.us') }}">
-                            {{ __('ui.work_with_us') }}
-                        </a>
-                    </li>
-
                 @else
 
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">
                             {{ __('ui.login') }}
                         </a>
                     </li>
 
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">
                             {{ __('ui.register') }}
