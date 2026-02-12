@@ -60,6 +60,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/search', [ArticleController::class, 'search'])
     ->name('articles.search');
 
+    Route::post('/set-locale/{lang}', [PublicController::class, 'setLocale'])
+    ->name('set.locale');
+
+
 
 
 Route::get('/make-revisor/{email}', [RevisorController::class, 'makeRevisor'])

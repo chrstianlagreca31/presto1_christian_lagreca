@@ -3,39 +3,19 @@
 
         <a class="navbar-brand" href="{{ route('home') }}">Presto</a>
 
-     
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+                data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-
-            {{-- 🔎 FORM RICERCA --}}
-            <form class="d-flex me-4"
-                  action="{{ route('articles.search') }}"
-                  method="GET">
-
-                <input class="form-control me-2"
-                       type="search"
-                       name="query"
-                       placeholder="Cerca annunci..."
-                       required>
-
-                <button class="btn btn-outline-light">
-                    Cerca
-                </button>
-            </form>
-
             <ul class="navbar-nav ms-auto">
 
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('articles.index') }}">
-                        Annunci
+                        {{ __('ui.announcements') }}
                     </a>
                 </li>
 
@@ -43,20 +23,17 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
                        href="#"
-                       id="categoriesDropdown"
                        role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Categorie
+                       data-bs-toggle="dropdown">
+                        {{ __('ui.categories') }}
                     </a>
 
-                    <ul class="dropdown-menu"
-                        aria-labelledby="categoriesDropdown">
+                    <ul class="dropdown-menu">
                         @foreach($categories as $category)
                             <li>
                                 <a class="dropdown-item"
                                    href="{{ route('articles.byCategory', $category) }}">
-                                    {{ $category->name }}
+                                    {{ __("ui.$category->name") }}
                                 </a>
                             </li>
                         @endforeach
@@ -64,7 +41,7 @@
                 </li>
 
                 @auth
-                    {{-- LINK REVISORE --}}
+
                     @if(auth()->user()->is_revisor)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('revisor.index') }}">
@@ -78,13 +55,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('articles.create') }}">
-                            Inserisci annuncio
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('work.with.us') }}">
-                            Lavora con noi
+                            {{ __('ui.insert_announcement') }}
                         </a>
                     </li>
 
@@ -97,19 +68,34 @@
                         </form>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('work.with.us') }}">
+                            {{ __('ui.work_with_us') }}
+                        </a>
+                    </li>
+
                 @else
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">
-                            Login
+                            {{ __('ui.login') }}
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">
-                            Registrati
+                            {{ __('ui.register') }}
                         </a>
                     </li>
+
                 @endauth
+
+                
+                <li class="nav-item ms-3 d-flex align-items-center gap-2">
+                    <x-_locale lang="it" />
+                    <x-_locale lang="en" />
+                    <x-_locale lang="es" />
+                </li>
 
             </ul>
         </div>
