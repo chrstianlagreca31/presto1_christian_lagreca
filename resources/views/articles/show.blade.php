@@ -1,5 +1,3 @@
-@php use Illuminate\Support\Facades\Storage; @endphp
-
 <x-layout :title="$article->title">
 
 <div class="container py-5">
@@ -18,8 +16,11 @@
 
                         @foreach($article->images as $key => $image)
                             <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                <img src="{{ Storage::url($image->path) }}"
-                                     class="d-block w-100 detail-img">
+                                <img 
+                                    src="{{ $image->getUrl(300,300) }}"
+                                    class="d-block w-100 detail-img"
+                                    alt="{{ $article->title }}"
+                                >
                             </div>
                         @endforeach
 

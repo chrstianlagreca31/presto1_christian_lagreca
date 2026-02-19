@@ -7,19 +7,21 @@
 
             <div class="row my-3">
 
-    @if($article_to_check->images->count() > 0)
+                @if($article_to_check->images->count() > 0)
 
-        @foreach($article_to_check->images as $image)
-            <div class="col-md-4 mb-3">
-                <img src="{{ Storage::url($image->path) }}"
-                     class="img-fluid article-img rounded shadow">
+                    @foreach($article_to_check->images as $image)
+                        <div class="col-md-4 mb-3">
+                            <img 
+                                src="{{ $image->getUrl(300,300) }}"
+                                class="img-fluid article-img rounded shadow"
+                                alt="{{ $article_to_check->title }}"
+                            >
+                        </div>
+                    @endforeach
+
+                @endif
+
             </div>
-        @endforeach
-
-    @endif
-
-</div>
-
 
             <p>{{ $article_to_check->description }}</p>
 

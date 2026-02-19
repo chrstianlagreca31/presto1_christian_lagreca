@@ -48,7 +48,7 @@
            multiple
            accept="image/*">
 
-    <div class="form-text">
+    <div class="form-text text-white">
         📸 Puoi caricare fino a <strong>6 immagini</strong>.<br>
         📐 Dimensione consigliata: <strong>1200x800 px</strong> (formato orizzontale).<br>
         ⚖️ Peso massimo per immagine: <strong>1MB</strong>.
