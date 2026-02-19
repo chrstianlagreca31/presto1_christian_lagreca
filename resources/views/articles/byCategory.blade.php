@@ -1,9 +1,10 @@
 <x-layout title="Categoria {{ $category->name }}">
     <div class="container">
 
-        <h1 class="mb-4">
-            Annunci in categoria: {{ $category->name }}
-        </h1>
+        <h1 class="mb-4 fw-bold">
+    {{ __('ui.by_category') }}: {{ __("ui.$category->name") }}
+</h1>
+
 
         <div class="row">
             @forelse($articles as $article)

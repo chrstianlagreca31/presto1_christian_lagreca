@@ -19,4 +19,16 @@ return [
     'Giardinaggio' => 'Giardinaggio',
     'Libri' => 'Libri',
     'Sport' => 'Sport',
+
+    'welcome' => 'Benvenuto su Presto',
+    'latest_announcements' => 'Ultimi annunci',
+    'details' => 'Dettagli',
+    'insert_announcement' => 'Inserisci annuncio',
+
+    'tutti_annunci' => 'Tutti gli annunci',
+
+    'by_category' => 'Annunci in categoria',
+
+
+
 ];

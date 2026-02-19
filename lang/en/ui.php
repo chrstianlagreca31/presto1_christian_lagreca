@@ -19,4 +19,17 @@ return [
     'Giardinaggio' => 'Gardening',
     'Libri' => 'Books',
     'Sport' => 'Sport',
+
+    'welcome' => 'Welcome to Presto',
+    'latest_announcements' => 'Latest announcements',
+    'details' => 'Details',
+    'insert_announcement' => 'Post announcement',
+
+    'tutti_annunci' => 'All announcements',
+
+    'by_category' => 'Announcements in category',
+
+
+
+
 ];

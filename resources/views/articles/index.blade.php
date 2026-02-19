@@ -1,17 +1,37 @@
-<x-layout title="Annunci">
-    <div class="container">
-        <h1 class="mb-4">Tutti gli annunci</h1>
+<x-layout :title="__('ui.tutti_annunci')">
 
-        <div class="row">
-            @foreach($articles as $article)
-                <div class="col-md-4 mb-3">
+    <div class="container py-5">
+
+        {{-- TITOLO --}}
+        <div class="text-center mb-5">
+            <h1 class="fw-bold display-5">
+                {{ __('ui.tutti_annunci') }}
+            </h1>
+          
+        </div>
+
+        {{-- LISTA ARTICOLI --}}
+        <div class="row g-4">
+
+            @forelse($articles as $article)
+                <div class="col-md-4">
                     <x-card :article="$article" />
                 </div>
-            @endforeach
+            @empty
+                <div class="col-12 text-center">
+                    <p class="text-muted">
+                        Nessun annuncio disponibile
+                    </p>
+                </div>
+            @endforelse
+
         </div>
 
-        <div class="mt-4">
+        {{-- PAGINAZIONE --}}
+        <div class="d-flex justify-content-center mt-5">
             {{ $articles->links() }}
         </div>
+
     </div>
+
 </x-layout>
