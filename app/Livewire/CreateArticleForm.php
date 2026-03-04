@@ -10,6 +10,7 @@ use App\Jobs\ResizeImage;
 use App\Jobs\GoogleVisionSafeSearch;
 use App\Jobs\GoogleVisionLabelImage;
 use Illuminate\Support\Facades\File;
+use App\Jobs\RemoveFaces;
 
 class CreateArticleForm extends Component
 {
@@ -72,11 +73,11 @@ class CreateArticleForm extends Component
                 ]);
 
            
-                ResizeImage::dispatch($newImage->path, 300, 300);
-
-           
-                GoogleVisionSafeSearch::dispatch($newImage->id);
-                GoogleVisionLabelImage::dispatch($newImage->id);
+              RemoveFaces::withChain([
+    new ResizeImage($newImage->path, 300, 300),
+    new GoogleVisionSafeSearch($newImage->id),
+    new GoogleVisionLabelImage($newImage->id)
+])->dispatch($newImage->id);
             }
         }
 
