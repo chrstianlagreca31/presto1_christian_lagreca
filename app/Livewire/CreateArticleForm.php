@@ -7,6 +7,8 @@ use Livewire\WithFileUploads;
 use App\Models\Article;
 use App\Models\Category;
 use App\Jobs\ResizeImage;
+use App\Jobs\GoogleVisionSafeSearch;
+use App\Jobs\GoogleVisionLabelImage;
 use Illuminate\Support\Facades\File;
 
 class CreateArticleForm extends Component
@@ -20,8 +22,6 @@ class CreateArticleForm extends Component
 
     public $temporary_images = [];
     public $images = [];
-
-    public $previewMode = false; // 👈 chiave del sistema
 
     protected function rules()
     {
@@ -50,16 +50,8 @@ class CreateArticleForm extends Component
 
     public function store()
     {
-       
-        if (!$this->previewMode) {
+        $this->validate();
 
-            $this->validate();
-            $this->previewMode = true;
-
-            return; 
-        }
-
-       
         $article = Article::create([
             'title' => $this->title,
             'description' => $this->description,
@@ -68,16 +60,24 @@ class CreateArticleForm extends Component
             'user_id' => auth()->id(),
         ]);
 
-        foreach ($this->images as $image) {
+        if (!empty($this->images)) {
 
-            $folder = "articles/{$article->id}";
-            $filePath = $image->store($folder, 'public');
+            foreach ($this->images as $image) {
 
-            $newImage = $article->images()->create([
-                'path' => $filePath
-            ]);
+                $folder = "articles/{$article->id}";
+                $filePath = $image->store($folder, 'public');
 
-            ResizeImage::dispatch($newImage->path, 300, 300);
+                $newImage = $article->images()->create([
+                    'path' => $filePath
+                ]);
+
+           
+                ResizeImage::dispatch($newImage->path, 300, 300);
+
+           
+                GoogleVisionSafeSearch::dispatch($newImage->id);
+                GoogleVisionLabelImage::dispatch($newImage->id);
+            }
         }
 
         File::deleteDirectory(storage_path('/app/livewire-tmp'));
@@ -90,8 +90,7 @@ class CreateArticleForm extends Component
             'price',
             'category_id',
             'images',
-            'temporary_images',
-            'previewMode'
+            'temporary_images'
         ]);
     }
 
